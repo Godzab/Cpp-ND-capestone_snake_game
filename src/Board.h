@@ -12,7 +12,6 @@ public:
         Board(0, 0);
     }
     Board(int h, int w);
-    ~Board();
     void addBorder();
     void clear();
     void Refresh();
@@ -28,9 +27,11 @@ private:
     int height;
     int width;
 
+    int start_end_y[2]; 
+    int start_end_x[2];
+
     std::uniform_int_distribution<int> w_distribution;
     std::uniform_int_distribution<int> h_distribution;
-
     WINDOW* board_window;
 };
 #endif

@@ -21,22 +21,26 @@ Game::~Game(){
         delete apple;
 }
 
+/**
+ * Handles Snake controls as input from keyboard.
+ * Captures the ASCII character codes for W, D, S, A to act as direction keys.
+ */
 void Game::processInput(){
     char input = board->getInput();
     wprintw(stdscr, "Input Received: %d", input);
     std::lock_guard<std::mutex> lock(mtx);
     switch (input)
     {
-    case 119:
+    case GameContols::K_UP:
         player->updateDirection(Direction::UP);
         break;
-    case 115:
+    case GameContols::K_DOWN:
         player->updateDirection(Direction::DOWN);
         break;
-    case 97:
+    case GameContols::K_LEFT:
         player->updateDirection(Direction::LEFT);
         break;
-    case 100:
+    case GameContols::K_RIGHT:
         player->updateDirection(Direction::RIGHT);
         break;
     default:
@@ -52,7 +56,6 @@ void Game::updateState(){
     PlayerPiece player_head = player->head();
     //Place the apple in an area not outside 
     //arena and not on snake body.
-    board->getEmptyCoordinates(y, x);
 
     //Clear previous apple location if snake-head is at apple location.
     if(apple != nullptr && (player_head.getX() == apple->getX() && player_head.getY() == apple->getY())){
@@ -60,18 +63,19 @@ void Game::updateState(){
         delete apple;
         PlayerPiece pc(player->tail().getY() + 1, player->tail().getX());
         player->addPiece(pc);
+        board->getEmptyCoordinates(y, x);
         apple = new Apple(y, x);
         board->add(*apple);
     }
 
     //Snake placement
-    //Clear previos state on board
+    //Clear previous state on board
     for(PlayerPiece pp : player->body){
         board->add(Empty(pp.getY(), pp.getX()));
     }
 
     //Populate new position.
-    player->update();
+    player->update(50, 20);
     for(PlayerPiece pp : player->body){
         board->add(pp);
     }

@@ -10,9 +10,12 @@ class PlayerPiece: public Drawable{
 public:
     PlayerPiece();
     PlayerPiece(int y, int x);
-    void moveNext(Direction dir);
+    void moveNext(int width, int height);
     void setIcon(char icon);
+    void setDirection(Direction dir);
+    Direction getDirection(char icon);
 private:
+     Direction cur_direction;
 };
 
 /**
@@ -25,7 +28,7 @@ public:
     void addPiece(PlayerPiece piece);
     void removePiece();
     void updateDirection(Direction);
-    void update();
+    void update(const int &width, const int &height);
     PlayerPiece tail();
     PlayerPiece head();
     std::vector<PlayerPiece> body;

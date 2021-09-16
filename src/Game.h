@@ -9,6 +9,14 @@
 #include "Empty.h"
 #include "Player.h"
 
+//Mapping to Ascii character codes.
+enum GameContols{
+    K_UP = 119,
+    K_DOWN = 115,
+    K_LEFT = 97,
+    K_RIGHT = 100
+};
+
 class Game{
 public:
     Game();

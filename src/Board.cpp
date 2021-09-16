@@ -3,20 +3,25 @@
 #include "Board.h"
 #include "Drawable.h"
 
+auto seed = std::chrono::system_clock::now().time_since_epoch().count();
+std::default_random_engine generator(seed);
+
 Board::Board(int h, int w): height(h), width(w){
     keypad(board_window, true);
     getmaxyx(stdscr, y_max, x_max);
-    board_window = newwin(height, width, (y_max/2)-(height/2), (x_max/2) - (width/2));
-    w_distribution = std::uniform_int_distribution<int>(0, (y_max/2) - (height/2));
-    h_distribution = std::uniform_int_distribution<int>(0, (x_max/2) - (width/2));
+    start_end_y[0] = (y_max/2)-(height/2);
+    start_end_y[1] = (y_max/2)-(height/2) + height;
+    start_end_x[0] = (x_max/2) - (width/2);
+    start_end_x[1] = (x_max/2) - (width/2) + width;
+    board_window = newwin(height, width, start_end_y[0], start_end_x[0]);
+    w_distribution = std::uniform_int_distribution<int>(0, start_end_y[0]);
+    h_distribution = std::uniform_int_distribution<int>(0, start_end_x[0]);
     initialize();
 }
 
-Board::~Board(){
-    delete board_window;
-}
-
 void Board::initialize(){
+    printw("y start: %d, y end: %d \n", start_end_y[0], start_end_y[1]);
+    printw("x start: %d, x end: %d \n", start_end_x[0], start_end_x[1]);
     clear();
     Refresh();
 }
@@ -52,9 +57,7 @@ char Board::getInput(){
 }
 
 void Board::getEmptyCoordinates(int &y, int &x){
-    auto seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine generator( seed );
-    
     //Not too readable
     while((mvwinch(board_window,y = w_distribution(generator), x = h_distribution(generator))) != ' ');
+    printw("Apple position : %d X %d", y, x);
 }

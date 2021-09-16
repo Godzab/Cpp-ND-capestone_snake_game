@@ -6,9 +6,8 @@
 #include "Game.h"
 #include "Player.h"
 
-#define BOARD_SIZE 20
-#define BOARD_W BOARD_SIZE * 2.5
-#define BOARD_H BOARD_SIZE
+#define BOARD_W 50
+#define BOARD_H 20
 
 using namespace std;
 
@@ -41,7 +40,6 @@ int main(){
         snk_game.updateState();
 
         snk_game.redraw();
-
         //More elaborate game ticks strategy required.
         this_thread::sleep_for(chrono::milliseconds(250));
     }
