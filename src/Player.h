@@ -13,7 +13,9 @@ public:
     void moveNext(int width, int height);
     void setIcon(char icon);
     void setDirection(Direction dir);
-    Direction getDirection(char icon);
+    void setX(int x);
+    void setY(int y);
+    Direction getDirection();
 private:
      Direction cur_direction;
 };
@@ -28,6 +30,7 @@ public:
     void addPiece(PlayerPiece piece);
     void removePiece();
     void updateDirection(Direction);
+    Direction getDirection();
     void update(const int &width, const int &height);
     PlayerPiece tail();
     PlayerPiece head();

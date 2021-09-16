@@ -23,7 +23,6 @@ int main(){
     player->addPiece(PlayerPiece(6, 7));
     
     Game snk_game(move(board), player);
-    
     /**
      * Separate thread to monitor input which is non-blocking.
      */
@@ -37,11 +36,12 @@ int main(){
      * Main game loop, updates interface, handles state.
      */
     while(!snk_game.isOver()){
+        //snk_game.processInput();
         snk_game.updateState();
 
         snk_game.redraw();
         //More elaborate game ticks strategy required.
-        this_thread::sleep_for(chrono::milliseconds(250));
+        this_thread::sleep_for(chrono::milliseconds(200));
     }
 
     t.join();

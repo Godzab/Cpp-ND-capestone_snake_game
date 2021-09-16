@@ -59,5 +59,4 @@ char Board::getInput(){
 void Board::getEmptyCoordinates(int &y, int &x){
     //Not too readable
     while((mvwinch(board_window,y = w_distribution(generator), x = h_distribution(generator))) != ' ');
-    printw("Apple position : %d X %d", y, x);
 }

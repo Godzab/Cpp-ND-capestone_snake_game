@@ -14,6 +14,14 @@ PlayerPiece::PlayerPiece(int y, int x):cur_direction(Direction::DOWN){
     this->icon = '#';
 }
 
+void PlayerPiece::setX(int x){
+    this->x = x; 
+}
+
+void PlayerPiece::setY(int y){
+    this->y = y; 
+}
+
 void PlayerPiece::moveNext(int width, int height){
     switch (this->cur_direction)
     {
@@ -41,7 +49,7 @@ void PlayerPiece::setIcon(char c){
 void PlayerPiece::setDirection(Direction dir){
     this->cur_direction = dir;
 }
-Direction PlayerPiece::getDirection(char icon){
+Direction PlayerPiece::getDirection(){
     return this->cur_direction;
 }
 
@@ -50,23 +58,32 @@ Direction PlayerPiece::getDirection(char icon){
  */
 
 PlayerPiece Player::tail(){
-    return body.back();
+    return body.front();
 }
 
 PlayerPiece Player::head(){
-    return body.front();
+    body.back().setIcon('@');
+    return body.back();
 }
 
 void Player::addPiece(PlayerPiece piece){
     body.push_back(piece);
 }
+
 void Player::removePiece(){
     body.pop_back();
 }
+
 void Player::updateDirection(Direction dir){
     this->cur_direction = dir;
 }
+
+Direction Player::getDirection(){
+    return this->cur_direction;
+}
+
 void Player::update(const int &width, const int &height){
+    int y_x[2] = {this->head().getY(), this->head().getX()}; 
     if(should_grow){
         should_grow = !should_grow;
         body.push_back(PlayerPiece(tail().getY() + 1, tail().getX()));
@@ -74,7 +91,14 @@ void Player::update(const int &width, const int &height){
     for(PlayerPiece &pc : body){
         if(pc.getX() == this->head().getX() && pc.getY() == this->head().getY()){
             pc.setDirection(this->cur_direction);
+            pc.moveNext(width, height);
+        } else{
+            pc.setIcon('&');
+            int tmp[2] = {pc.getY(), pc.getX()};
+            pc.setY(y_x[0]);
+            pc.setX(y_x[1]);
+            y_x[0] = tmp[0];
+            y_x[1] = tmp[1];
         }
-        pc.moveNext(width, height);
     }
 }

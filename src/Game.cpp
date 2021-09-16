@@ -24,23 +24,29 @@ Game::~Game(){
 /**
  * Handles Snake controls as input from keyboard.
  * Captures the ASCII character codes for W, D, S, A to act as direction keys.
+ * Prevent direction reversal. (You cannot navigate left while travelling right e.t.c)
  */
 void Game::processInput(){
     char input = board->getInput();
     wprintw(stdscr, "Input Received: %d", input);
     std::lock_guard<std::mutex> lock(mtx);
+    Direction cur_dir = player->getDirection();
     switch (input)
     {
     case GameContols::K_UP:
+        if (cur_dir != Direction::DOWN)
         player->updateDirection(Direction::UP);
         break;
     case GameContols::K_DOWN:
+        if (cur_dir != Direction::UP)
         player->updateDirection(Direction::DOWN);
         break;
     case GameContols::K_LEFT:
+        if (cur_dir != Direction::RIGHT)
         player->updateDirection(Direction::LEFT);
         break;
     case GameContols::K_RIGHT:
+        if (cur_dir != Direction::LEFT)
         player->updateDirection(Direction::RIGHT);
         break;
     default:
@@ -61,7 +67,7 @@ void Game::updateState(){
     if(apple != nullptr && (player_head.getX() == apple->getX() && player_head.getY() == apple->getY())){
         board->add(Empty(apple->getY(), apple->getX()));
         delete apple;
-        PlayerPiece pc(player->tail().getY() + 1, player->tail().getX());
+        PlayerPiece pc(player->head().getY(), player->head().getX()+ 1);
         player->addPiece(pc);
         board->getEmptyCoordinates(y, x);
         apple = new Apple(y, x);
