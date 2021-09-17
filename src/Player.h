@@ -26,7 +26,7 @@ private:
  */
 class Player{
 public:
-    Player(){ cur_direction = Direction::DOWN; }
+    Player();
     void addPiece(PlayerPiece piece);
     void removePiece();
     void updateDirection(Direction);

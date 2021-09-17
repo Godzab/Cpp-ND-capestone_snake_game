@@ -4,6 +4,7 @@
 #include "Drawable.h"
 #include <chrono>
 #include <random>
+#include <string>
 #include <ncurses.h>
 
 class Board{
@@ -19,6 +20,7 @@ public:
     void getEmptyCoordinates(int &y, int &x);
     void add(Drawable drawable);
     void addAt(int, int, char);
+    void writeToStats(int message);
     char getInput();
 
 private:
@@ -27,11 +29,12 @@ private:
     int height;
     int width;
 
-    int start_end_y[2]; 
-    int start_end_x[2];
+    int start_end_y; 
+    int start_end_x;
 
     std::uniform_int_distribution<int> w_distribution;
     std::uniform_int_distribution<int> h_distribution;
     WINDOW* board_window;
+    WINDOW* stats_window;
 };
 #endif

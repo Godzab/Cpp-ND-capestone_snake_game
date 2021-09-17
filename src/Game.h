@@ -21,11 +21,21 @@ class Game{
 public:
     Game();
     ~Game();
+    //copy constructor
+    Game(Game &game);
+    //copy assignment constructor
+    Game &operator = (Game &game);
+    //move constructor
+    Game(Game &&game);
+    //move assignment constructor
+    Game &operator = (Game &&game);
     Game(std::unique_ptr<Board> bd, std::shared_ptr<Player> plr);
     void processInput();
     void updateState();
     void redraw();
     bool isOver();
+    void checkSelf();
+
 
 private:
     void initialize();
@@ -34,6 +44,7 @@ private:
     Apple *apple;
     std::shared_ptr<Player> player;
     std::mutex mtx;
+    int score{0};
 };
 
 #endif

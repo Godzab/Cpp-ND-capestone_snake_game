@@ -18,15 +18,13 @@ int main(){
     //Initializes the board on construction
     unique_ptr<Board> board = make_unique<Board>(20, 50);
     shared_ptr<Player> player = make_shared<Player>();
-    player->addPiece(PlayerPiece(4, 7));
-    player->addPiece(PlayerPiece(5, 7));
-    player->addPiece(PlayerPiece(6, 7));
-    
     Game snk_game(move(board), player);
+
     /**
-     * Separate thread to monitor input which is non-blocking.
+     * Side-car game loop. 
+     * non-blocking thread to monitor input.
      */
-    thread t([&snk_game](){
+    thread gameInputThread([&snk_game](){
         while(!snk_game.isOver()){
             snk_game.processInput();
         }
@@ -36,16 +34,15 @@ int main(){
      * Main game loop, updates interface, handles state.
      */
     while(!snk_game.isOver()){
-        //snk_game.processInput();
         snk_game.updateState();
-
+        snk_game.checkSelf();
         snk_game.redraw();
         //More elaborate game ticks strategy required.
         this_thread::sleep_for(chrono::milliseconds(200));
     }
 
-    t.join();
     getch();
+    gameInputThread.join();
     endwin();
     return 0;
 }

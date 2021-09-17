@@ -21,6 +21,47 @@ Game::~Game(){
         delete apple;
 }
 
+Game::Game(Game &game_cp){
+    apple = new Apple(0, 0);
+    *apple = *game_cp.apple;
+    board = std::move(game_cp.board);
+    player = game_cp.player;
+}
+    //copy assignment constructor
+Game &Game::operator = (Game &game_cp){
+    if (this == &game_cp)
+        return *this;
+
+    apple = new Apple(0, 0);
+    *apple = *game_cp.apple;
+    board = std::move(game_cp.board);
+    player = game_cp.player;
+    score = game_cp.score;
+    return *this;
+}
+    //move constructor
+Game::Game(Game &&game_cp){
+    apple = new Apple(0, 0);
+    *apple = *game_cp.apple;
+    board = std::move(game_cp.board);
+    player = game_cp.player;
+    score = game_cp.score;
+    game_cp.player.reset();
+}
+    //move assignment constructor
+Game &Game::operator = (Game &&game_cp){
+    if (this == &game_cp)
+        return *this;
+    apple = new Apple(0, 0);
+    *apple = *game_cp.apple;
+    board = std::move(game_cp.board);
+    player = game_cp.player;
+    score = game_cp.score;
+    game_cp.player.reset();
+
+    return *this;
+}
+
 /**
  * Handles Snake controls as input from keyboard.
  * Captures the ASCII character codes for W, D, S, A to act as direction keys.
@@ -55,6 +96,16 @@ void Game::processInput(){
     //Will process input later on.
 }
 
+void Game::checkSelf() {
+    PlayerPiece head = player->head();
+    for (auto pc : this->player->body) {
+        if(pc.getIcon() == '@') continue;
+        if (pc.getX() == head.getX() && pc.getY() == head.getY()) {
+            game_over = 1;
+        }
+    }
+}
+
 void Game::updateState(){
     int y;
     int x;
@@ -65,11 +116,13 @@ void Game::updateState(){
 
     //Clear previous apple location if snake-head is at apple location.
     if(apple != nullptr && (player_head.getX() == apple->getX() && player_head.getY() == apple->getY())){
+        score++;
         board->add(Empty(apple->getY(), apple->getX()));
         delete apple;
         PlayerPiece pc(player->head().getY(), player->head().getX()+ 1);
         player->addPiece(pc);
         board->getEmptyCoordinates(y, x);
+        board->writeToStats(score);
         apple = new Apple(y, x);
         board->add(*apple);
     }

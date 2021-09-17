@@ -22,6 +22,10 @@ void PlayerPiece::setY(int y){
     this->y = y; 
 }
 
+/**
+ * Sets the next direction of the piece
+ * Mainly used by snake's head.
+ */
 void PlayerPiece::moveNext(int width, int height){
     switch (this->cur_direction)
     {
@@ -40,6 +44,7 @@ void PlayerPiece::moveNext(int width, int height){
         default:
             break;
     }
+
 }
 
 void PlayerPiece::setIcon(char c){
@@ -54,7 +59,7 @@ Direction PlayerPiece::getDirection(){
 }
 
 /**
- * Player methods
+ * Player Class methods
  */
 
 PlayerPiece Player::tail(){
@@ -66,8 +71,15 @@ PlayerPiece Player::head(){
     return body.back();
 }
 
+Player::Player(){
+    this->addPiece(PlayerPiece(4, 7));
+    this->addPiece(PlayerPiece(5, 7));
+    this->addPiece(PlayerPiece(6, 7));
+    cur_direction = Direction::DOWN;
+}
+
 void Player::addPiece(PlayerPiece piece){
-    body.push_back(piece);
+    body.insert(body.begin(), piece);
 }
 
 void Player::removePiece(){
@@ -91,9 +103,9 @@ void Player::update(const int &width, const int &height){
     for(PlayerPiece &pc : body){
         if(pc.getX() == this->head().getX() && pc.getY() == this->head().getY()){
             pc.setDirection(this->cur_direction);
-            pc.moveNext(width, height);
+            pc.moveNext(width-1, height);
         } else{
-            pc.setIcon('&');
+            pc.setIcon('#');
             int tmp[2] = {pc.getY(), pc.getX()};
             pc.setY(y_x[0]);
             pc.setX(y_x[1]);
