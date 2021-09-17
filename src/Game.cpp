@@ -119,7 +119,7 @@ void Game::updateState(){
         score++;
         board->add(Empty(apple->getY(), apple->getX()));
         delete apple;
-        PlayerPiece pc(player->head().getY(), player->head().getX()+ 1);
+        PlayerPiece pc(player->tail().getY(), player->tail().getX());
         player->addPiece(pc);
         board->getEmptyCoordinates(y, x);
         board->writeToStats(score);
