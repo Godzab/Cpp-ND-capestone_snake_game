@@ -28,14 +28,12 @@ class Player{
 public:
     Player();
     void addPiece(PlayerPiece piece);
-    void removePiece();
     void updateDirection(Direction);
     Direction getDirection();
     void update(const int &width, const int &height);
     PlayerPiece tail();
     PlayerPiece head();
     std::vector<PlayerPiece> body;
-    bool should_grow{false};
 private:
     Direction cur_direction;
 };

@@ -9,32 +9,32 @@
 
 class Board{
 public:
-    Board(){
-        Board(0, 0);
-    }
+    Board();
     Board(int h, int w);
     void addBorder();
     void clear();
     void Refresh();
     void initialize();
-    void getEmptyCoordinates(int &y, int &x);
+    void getEmptyCoordinates(int &, int &);
     void add(Drawable drawable);
-    void addAt(int, int, char);
-    void writeToStats(int message);
+    void writeToStats(char *);
     char getInput();
-
-private:
-    int x_max;  
-    int y_max;
     int height;
     int width;
+    char stats_buffer[50];
 
-    int start_end_y; 
-    int start_end_x;
+private:
+    int x_max{};
+    int y_max{};
+    int start_end_y{};
+    int start_end_x{};
 
     std::uniform_int_distribution<int> w_distribution;
     std::uniform_int_distribution<int> h_distribution;
-    WINDOW* board_window;
-    WINDOW* stats_window;
+
+    //Game window
+    WINDOW* board_window{};
+    //Scores window
+    WINDOW* stats_window{};
 };
 #endif

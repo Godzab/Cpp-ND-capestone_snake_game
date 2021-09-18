@@ -5,9 +5,9 @@
 
 class Apple: public Drawable{
 public:
+    Apple();
     Apple(int y, int x);
 private:
-    //Private members.
 };
 
 #endif

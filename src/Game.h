@@ -19,31 +19,33 @@ enum GameContols{
 
 class Game{
 public:
-    Game();
     ~Game();
     //copy constructor
     Game(Game &game);
     //copy assignment constructor
-    Game &operator = (Game &game);
+    Game &operator = (Game const &game);
     //move constructor
-    Game(Game &&game);
+    Game(Game &&game) noexcept;
     //move assignment constructor
-    Game &operator = (Game &&game);
+    Game &operator = (Game &&game) noexcept;
     Game(std::unique_ptr<Board> bd, std::shared_ptr<Player> plr);
+
+    //Getters and mutators
     void processInput();
     void updateState();
     void redraw();
-    bool isOver();
-    void checkSelf();
+    bool isOver() const;
+    void checkRules();
 
 
 private:
     void initialize();
     std::unique_ptr<Board> board;
-    bool game_over;
-    Apple *apple;
     std::shared_ptr<Player> player;
+    Apple *apple;
+
     std::mutex mtx;
+    bool game_over{false};
     int score{0};
 };
 
