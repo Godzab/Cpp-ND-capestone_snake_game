@@ -8,12 +8,12 @@ Drawable::Drawable(){
 
 Drawable::Drawable(int y, int x, char c): y(y), x(x), icon(c){}
 
-int Drawable::getX(){
+int Drawable::getX() const{
     return x;
 }
-int Drawable::getY(){
+int Drawable::getY() const{
     return y;
 }
-char Drawable::getIcon(){
+char Drawable::getIcon() const{
     return icon;
 }

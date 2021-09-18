@@ -38,7 +38,7 @@ void PlayerPiece::moveNext(int width, int height) {
             this->y = abs(this->y - 1) % (height) == 0 ? height - 1 : abs(this->y - 1) % (height - 1);
             break;
         case Direction::LEFT:
-            this->x = abs(this->x - 1) % (width) == 0 ? width - 2 : abs(this->x - 1) % (width - 1);
+            this->x = abs(this->x - 1) % (width) == 0 ? width - 1 : abs(this->x - 1) % (width);
             break;
         case Direction::RIGHT:
             this->x++;
@@ -65,6 +65,14 @@ Direction PlayerPiece::getDirection() {
  * Player Class methods
  */
 
+//Constructor
+Player::Player() {
+    this->addPiece(PlayerPiece(4, 7));
+    this->addPiece(PlayerPiece(5, 7));
+    this->addPiece(PlayerPiece(6, 7));
+    cur_direction = Direction::DOWN;
+}
+
 PlayerPiece Player::tail() {
     return body.front();
 }
@@ -72,13 +80,6 @@ PlayerPiece Player::tail() {
 PlayerPiece Player::head() {
     body.back().setIcon('@');
     return body.back();
-}
-
-Player::Player() {
-    this->addPiece(PlayerPiece(4, 7));
-    this->addPiece(PlayerPiece(5, 7));
-    this->addPiece(PlayerPiece(6, 7));
-    cur_direction = Direction::DOWN;
 }
 
 void Player::addPiece(PlayerPiece piece) {

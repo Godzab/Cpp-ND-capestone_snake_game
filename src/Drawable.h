@@ -7,9 +7,9 @@ public:
     Drawable(int y, int x, char c);
 
     // Getters and setters
-    int getX();
-    int getY();
-    char getIcon();
+    int getX() const;
+    int getY() const;
+    char getIcon() const;
 
 protected:
     int y;

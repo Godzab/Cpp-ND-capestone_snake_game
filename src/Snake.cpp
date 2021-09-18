@@ -29,7 +29,8 @@ int main() {
     });
 
     /**
-     * Main game loop, updates interface, handles state.
+     * Main game loop.
+     * updates interface, handles state.
      */
     while (!snk_game.isOver()) {
         snk_game.updateState();

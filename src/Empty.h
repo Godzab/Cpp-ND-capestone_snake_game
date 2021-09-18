@@ -7,7 +7,6 @@ class Empty: public Drawable{
 public:
     Empty(int y, int x);
 private:
-    //Private members.
 };
 
 #endif

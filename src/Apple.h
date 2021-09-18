@@ -3,10 +3,12 @@
 
 #include "Drawable.h"
 
-class Apple: public Drawable{
+class Apple : public Drawable {
 public:
     Apple();
+
     Apple(int y, int x);
+
 private:
 };
 

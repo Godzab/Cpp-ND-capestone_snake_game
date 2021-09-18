@@ -9,33 +9,34 @@
 #define FINAL_SCORE_MSG "GAME OVER - Final Score: %d"
 
 Game::Game(std::unique_ptr<Board> bd, std::shared_ptr<Player> plr) : board(std::move(bd)), player(std::move(plr)) {
-    apple = new Apple();
     this->initialize();
 }
 
+//Destructor
 Game::~Game() {
-    delete apple;
+    if (apple != nullptr) {
+        delete apple;
+    }
 }
 
-Game::Game(Game &game_cp) {
+//Copy constructor
+Game::Game(Game &game) : board(std::make_unique<Board>(*game.board)), player(game.player), apple(game.apple),
+                         game_over(game.game_over), score(game.score) {
     apple = new Apple();
-    *apple = *game_cp.apple;
-    board = std::move(game_cp.board);
-    player = game_cp.player;
-    board = std::make_unique<Board>(game_cp.board->height, game_cp.board->width);
-    score = game_cp.score;
+    *apple = *game.apple;
 }
 
 //copy assignment constructor
 Game &Game::operator=(Game const &game_cp) {
-    if (this == &game_cp)
-        return *this;
+    if (this != &game_cp) {
+        apple = new Apple();
+        board = std::make_unique<Board>(*game_cp.board);
+        this->player = game_cp.player;
+        *this->apple = *game_cp.apple;
+        this->game_over = game_cp.game_over;
+        this->score = game_cp.score;
+    }
 
-    apple = new Apple();
-    *apple = *game_cp.apple;
-    board = std::make_unique<Board>(game_cp.board->height, game_cp.board->width);
-    player = game_cp.player;
-    score = game_cp.score;
     return *this;
 }
 
