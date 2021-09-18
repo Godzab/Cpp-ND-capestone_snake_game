@@ -16,12 +16,15 @@ public:
     void Refresh();
     void initialize();
     void getEmptyCoordinates(int &, int &);
-    void add(Drawable drawable);
+    void add(Drawable drawable, int color_code);
     void writeToStats(char *);
     char getInput();
     int height;
     int width;
     char stats_buffer[50];
+
+    static void startRenderer();
+    static void terminateRenderer();
 
 private:
     int x_max{};

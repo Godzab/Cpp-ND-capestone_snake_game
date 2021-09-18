@@ -12,9 +12,7 @@
 using namespace std;
 
 int main() {
-    initscr();
-    noecho();
-
+    Board::startRenderer();
     unique_ptr<Board> board = make_unique<Board>(BOARD_H, BOARD_W);
     shared_ptr<Player> player = make_shared<Player>();
     Game snk_game(move(board), player);
@@ -40,9 +38,7 @@ int main() {
         this_thread::sleep_for(chrono::milliseconds(200));
     }
 
-    //Block to show final score.
-    getch();
     gameInputThread.join();
-    endwin();
+    Board::terminateRenderer();
     return 0;
 }

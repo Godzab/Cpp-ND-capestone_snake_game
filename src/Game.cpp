@@ -135,19 +135,19 @@ void Game::updateState() {
 
         delete apple;
         apple = new Apple(y, x);
-        board->add(*apple);
+        board->add(*apple, 4);
     }
 
     //Snake placement
     //Clear previous snake state from board
     for (Drawable pp : player->body) {
-        board->add(Empty(pp.getY(), pp.getX()));
+        board->add(Empty(pp.getY(), pp.getX()), 1);
     }
 
     //Populate new position.
     player->update(board->width, board->height);
     for (Drawable pp : player->body) {
-        board->add(pp);
+        board->add(pp, 1);
     }
     board->Refresh();
 }
@@ -165,7 +165,7 @@ void Game::initialize() {
     int y;
     board->getEmptyCoordinates(y, x);
     apple = new Apple(y, x);
-    board->add(*apple);
+    board->add(*apple, 4);
     sprintf(board->stats_buffer, SCORE_MSG, score);
     board->writeToStats(board->stats_buffer);
 }
