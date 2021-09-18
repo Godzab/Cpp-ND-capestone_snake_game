@@ -11,10 +11,10 @@
 
 //Mapping to Ascii character codes.
 enum GameContols{
-    K_UP = 119,
-    K_DOWN = 115,
-    K_LEFT = 97,
-    K_RIGHT = 100
+    K_UP = 119,     // W
+    K_DOWN = 115,   // S
+    K_LEFT = 97,    // A
+    K_RIGHT = 100   // D
 };
 
 class Game{

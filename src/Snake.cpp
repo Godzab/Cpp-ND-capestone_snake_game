@@ -27,6 +27,7 @@ int main() {
         while (!snk_game.isOver()) {
             snk_game.processInput();
         }
+        this_thread::sleep_for(chrono::milliseconds(1));
     });
 
     /**

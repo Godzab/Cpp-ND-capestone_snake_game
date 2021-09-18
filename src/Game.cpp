@@ -5,6 +5,9 @@
 #include "Apple.h"
 #include "Player.h"
 
+#define SCORE_MSG "Score: %d"
+#define FINAL_SCORE_MSG "GAME OVER - Final Score: %d"
+
 Game::Game(std::unique_ptr<Board> bd, std::shared_ptr<Player> plr) : board(std::move(bd)), player(std::move(plr)) {
     apple = new Apple();
     this->initialize();
@@ -108,7 +111,7 @@ void Game::checkRules() {
         }
         if (pc.getX() == head.getX() && pc.getY() == head.getY()) {
             game_over = true;
-            sprintf (board->stats_buffer, "GAME OVER - Final Score: %d", score);
+            sprintf(board->stats_buffer, FINAL_SCORE_MSG, score);
             board->writeToStats(board->stats_buffer);
         }
     }
@@ -127,7 +130,7 @@ void Game::updateState() {
         PlayerPiece pc(player->tail().getY(), player->tail().getX());
         player->addPiece(pc);
         board->getEmptyCoordinates(y, x);
-        sprintf (board->stats_buffer, "Score: %d", score);
+        sprintf(board->stats_buffer, SCORE_MSG, score);
         board->writeToStats(board->stats_buffer);
 
         delete apple;
@@ -163,6 +166,6 @@ void Game::initialize() {
     board->getEmptyCoordinates(y, x);
     apple = new Apple(y, x);
     board->add(*apple);
-    sprintf (board->stats_buffer, "Score: %d", score);
+    sprintf(board->stats_buffer, SCORE_MSG, score);
     board->writeToStats(board->stats_buffer);
 }
