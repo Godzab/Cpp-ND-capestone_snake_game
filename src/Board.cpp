@@ -93,11 +93,11 @@ void Board::add(Drawable d, int color_code = 1) {
 }
 
 void Board::writeToStats(char *score, bool is_top_score) {
-    if(is_top_score){
+    if (is_top_score) {
         wattron(stats_window, COLOR_PAIR(1));
         mvwprintw(stats_window, 3, 2, score);
         wattroff(stats_window, COLOR_PAIR(1));
-    } else{
+    } else {
         wattron(stats_window, COLOR_PAIR(3));
         mvwprintw(stats_window, 1, 2, score);
         wattroff(stats_window, COLOR_PAIR(3));

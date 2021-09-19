@@ -1,6 +1,7 @@
 #include <memory>
 #include <thread>
 #include <chrono>
+#include <future>
 
 #include "Board.h"
 #include "Game.h"
