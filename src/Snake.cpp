@@ -38,7 +38,7 @@ int main() {
         snk_game.redraw();
         this_thread::sleep_for(chrono::milliseconds(200));
     }
-
+    snk_game.setTopScore();
     gameInputThread.join();
     Board::terminateRenderer();
     return 0;

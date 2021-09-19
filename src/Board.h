@@ -25,7 +25,7 @@ public:
 
     void add(Drawable drawable, int color_code);
 
-    void writeToStats(char *);
+    void writeToStats(char *, bool is_top_score);
 
     char getInput();
 

@@ -8,7 +8,7 @@ choice.
 * The snake consumes apples on the board and grows in size. The game ends if the snake bites its own body. 
 * The player gains a point everytime they consume an apple.
 
-![Ascii Snake](images/preview.jpg)
+![Ascii Snake](images/preview.png)
 
 ## Dependencies for Running Locally
 * cmake >= 3.7

@@ -47,6 +47,9 @@ public:
 
     void checkRules();
 
+    void getTopScore();
+
+    void setTopScore();
 
 private:
     void initialize();
@@ -58,6 +61,7 @@ private:
     std::mutex mtx;
     bool game_over{false};
     int score{0};
+    int top_score{0};
 };
 
 #endif

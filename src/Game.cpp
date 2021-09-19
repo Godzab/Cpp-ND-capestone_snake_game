@@ -1,12 +1,15 @@
 #include <chrono>
 #include <mutex>
+#include <fstream>
+#include <sstream>
 
 #include "Game.h"
 #include "Apple.h"
 #include "Player.h"
 
-#define SCORE_MSG "Score: %d"
+#define SCORE_MSG "Your Score: %d"
 #define FINAL_SCORE_MSG "GAME OVER - Final Score: %d"
+#define SCORES_FILE "scores.txt"
 
 Game::Game(std::unique_ptr<Board> bd, std::shared_ptr<Player> plr) : board(std::move(bd)), player(std::move(plr)) {
     this->initialize();
@@ -113,7 +116,7 @@ void Game::checkRules() {
         if (pc.getX() == head.getX() && pc.getY() == head.getY()) {
             game_over = true;
             sprintf(board->stats_buffer, FINAL_SCORE_MSG, score);
-            board->writeToStats(board->stats_buffer);
+            board->writeToStats(board->stats_buffer, false);
         }
     }
 }
@@ -132,7 +135,7 @@ void Game::updateState() {
         player->addPiece(pc);
         board->getEmptyCoordinates(y, x);
         sprintf(board->stats_buffer, SCORE_MSG, score);
-        board->writeToStats(board->stats_buffer);
+        board->writeToStats(board->stats_buffer, false);
 
         delete apple;
         apple = new Apple(y, x);
@@ -164,9 +167,38 @@ bool Game::isOver() const {
 void Game::initialize() {
     int x;
     int y;
+    char n[16];
     board->getEmptyCoordinates(y, x);
     apple = new Apple(y, x);
     board->add(*apple, 4);
     sprintf(board->stats_buffer, SCORE_MSG, score);
-    board->writeToStats(board->stats_buffer);
+    board->writeToStats(board->stats_buffer, false);
+    getTopScore();
+    sprintf(n, "Top Score: %d", top_score);
+    board->writeToStats(n, true);
+}
+
+void Game::getTopScore() {
+    std::ifstream fin(SCORES_FILE);
+    std::string line;
+    if (!fin.is_open()) {
+        std::ofstream fout(SCORES_FILE);
+        fout << 0 << "\n";
+        this->top_score = 0;
+        return;
+    }
+
+    getline(fin, line);
+    std::istringstream linestrm(line);
+    linestrm >> this->top_score;
+}
+
+void Game::setTopScore() {
+    if (this->score > this->top_score) {
+        std::ofstream fout(SCORES_FILE);
+        std::string line;
+        if (fout.is_open()) {
+            fout << this->score << "\n";
+        }
+    }
 }
