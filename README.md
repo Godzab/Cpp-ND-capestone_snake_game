@@ -1,8 +1,8 @@
 # Cpp-ND-capestone_snake_game
 
-Capestone project for udacity nano-degree program. Ascii Snake game using ncurses as the renderer.  
+Capestone project for udacity nano-degree program. Ascii Snake game using ncurses as the renderer.   
 All class files (headers and definations) are located in the `src` folder. The main function is to be found in
-file `Snake.cpp`.
+file `Snake.cpp`. Idea inspired by youtuber **casual coder**.
 
 * As with traditional snake game functionality, the game involves a snake the moves in the direction of the player's
   choice.
