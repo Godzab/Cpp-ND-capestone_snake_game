@@ -9,7 +9,7 @@ file `Snake.cpp`. Idea inspired by youtuber **casual coder**.
 * The snake consumes apples on the board and grows in size. The game ends if the snake bites its own body.
 * The player gains a point everytime they consume an apple.
 
-![Ascii Snake](images/preview.png)
+![Ascii Snake](images/preview.gif)
 
 ## Dependencies for Running Locally
 
